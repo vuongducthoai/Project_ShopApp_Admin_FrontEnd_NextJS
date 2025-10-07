@@ -3,13 +3,13 @@ import Link from "next/link";
 import { 
   Home, Box, ShoppingCart, User, 
   MessageSquare, Ticket, Bell, 
-  Settings, LogOut 
+  Settings, LogOut, Grid
 } from "lucide-react";
 
 export default function Sidebar() {
   return (
-    <aside className="w-60 h-screen bg-white border-r p-4 flex flex-col">
-      <h1 className="text-xl font-bold text-blue-600 mb-6">DashStack</h1>
+    <aside className="w-50 h-screen bg-white border-r p-4 flex flex-col">
+      <h1 className="text-xl text-center font-bold text-blue-600 mb-6">Dash<span className="text-gray-800">Stack</span></h1>
       <nav className="flex-1 space-y-2">
     <Link
           href="/"
@@ -25,6 +25,9 @@ export default function Sidebar() {
         </Link>
         <Link href="/orders" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">
            <ShoppingCart size={18}/> Order Lists
+        </Link>
+        <Link href="/categories" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">
+           <Grid size={18}/> Category
         </Link>
         <Link href="/products" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">
           <Box size={18}/> Products

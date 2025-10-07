@@ -24,7 +24,7 @@ export default function Header() {
         {/* Notification icon with badge */}
         <div className="relative cursor-pointer">
           <Bell size={20} className="text-gray-600" />
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full w-3 h-3 flex items-center justify-center"></span>
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full w-3 h-3 flex items-center justify-center">6</span>
         </div>
 
         {/* Language selector */}

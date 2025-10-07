@@ -3,6 +3,9 @@ import "./globals.css";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { Nunito_Sans } from 'next/font/google';
+
+const nunito = Nunito_Sans({ subsets: ['latin'], weight: ['400','600','700'] });
 
 export const metadata = {
   title: "Admin Dashboard",

@@ -4,60 +4,58 @@ import { Search, Filter, Calendar, Plus, Download, User, ShieldCheck, ChevronDow
 import FilterDropdown from "./FilterDropdown";
 
 type UserFilterProps = {
+  filters: { search: string; role: string; status: string | number };
+  onFilterChange: (name: string, value: string | number) => void;
   onAddUserClick: () => void;
 }
 
-
-
-
-export default function UserFilter({onAddUserClick} : UserFilterProps) {
-  //Management state of every dtopdown
-  const [selectedRole, setSelectedRole] = useState<string | null>(null);
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-
-
-  const roleOptions = [
-    {label: "All", icon: LayoutGrid},
-    { label: "Admin", icon: ShieldCheck },
-    { label: "Customer", icon: User },
+export default function UserFilter({filters, onFilterChange, onAddUserClick} : UserFilterProps) {
+    const roleOptions = [
+    {label: "All",  value: "",icon: LayoutGrid},
+    { label: "Admin", value: "Admin" ,icon: ShieldCheck },
+    { label: "Customer", value: "Customer" ,icon: User },
   ];
 
   const statusOptions = [
-    {label: "All", icon: LayoutGrid},
-    {label: "Active", icon: ShieldCheck},
-    {label: "Banned", icon: User},
-    {label: "Pending", icon: User },
+    {label: "All", value: "", icon: LayoutGrid},
+    {label: "Active", value: 1, icon: ShieldCheck},
+    {label: "Banned", value: 0, icon: User},
   ]
+
+  const handleDropdownSelect = (name: 'role' | 'status', value: string) => {
+    onFilterChange(name, value);
+  };
+
   return (
     <div className="flex flex-wrap justify-between items-center gap-4 bg-[#F9FAFB] p-4 rounded-lg">
       <div className="flex gap-2 flex-wrap items-center">
         {/* Search */}
-        <div className="flex items-center border rounded-[20px] px-2">
+        <div className="flex items-center border rounded-[20px] px-4 py-1">
           <Search size={18} className="text-gray-500" />
           <input
             suppressHydrationWarning
             type="text"
             placeholder="Search"
             className="ml-2 outline-none border-none"
+            value={filters.search} 
+            onChange={(e) => onFilterChange('search', e.target.value)}
           />  
         </div>
-
-
 
         <FilterDropdown 
           label="Role" 
           icon={User} 
           options={roleOptions} 
-          selectedValue = {selectedRole}  
-          onSelect = {setSelectedRole}
+          selectedValue = {filters.role}  
+          onSelect={(value) => onFilterChange('role', value)}
 
         />
         <FilterDropdown 
           label="Status" 
           icon={ShieldCheck} 
           options={statusOptions}
-          selectedValue = {selectedStatus}
-          onSelect = {setSelectedStatus}
+          selectedValue = {filters.status}
+          onSelect={(value) => onFilterChange('status', value)}
           />
       </div>
 

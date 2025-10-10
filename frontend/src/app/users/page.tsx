@@ -1,9 +1,13 @@
+"use client"
+import {useState} from "react"
 import UserTable from "@/components/users/UserTable";
 import UserFilter from "@/components/users/UserFilter";
+import AddUserModal from "@/components/users/AddUserModal";
 
 export default function UsersPage() {
+  const [isModalopen, setIsModalOpen] = useState(false);
   return (
-    <div className="space-y-6">
+    <main className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">User Management</h1>
         <p className="text-gray-500">
@@ -11,8 +15,13 @@ export default function UsersPage() {
         </p>
       </div>
 
-      <UserFilter />
+      <UserFilter onAddUserClick={() => setIsModalOpen(true)}/>
+        <AddUserModal
+          isOpen = {isModalopen}
+          onClose={() => setIsModalOpen(false)}
+        >
+        </AddUserModal>
       <UserTable />
-    </div>
+    </main>
   );
 }

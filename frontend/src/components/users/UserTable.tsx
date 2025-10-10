@@ -27,37 +27,54 @@ export default function UserTable() {
   return (
     <div className="overflow-x-auto bg-white border rounded-lg">
       <table className="min-w-full text-sm">
-        <thead className="bg-gray-100">
+        <thead className="bg-[#2E4258] text-[#F3F8FF]">
           <tr>
-            <th className="px-4 py-2 text-left">Full Name</th>
+            <th className="px-4 py-2 text-left">First Name</th>
+            <th className="px-4 py-2 text-left">Last Name</th>
             <th className="px-4 py-2 text-left">Email</th>
-            <th className="px-4 py-2 text-left">Username</th>
-            <th className="px-4 py-2 text-left">Status</th>
+            <th className="px-4 py-2 text-left">Phone Number</th>
+            <th className="px-4 py-2 text-left">Gender</th>
             <th className="px-4 py-2 text-left">Role</th>
-            <th className="px-4 py-2 text-left">Joined</th>
-            <th className="px-4 py-2 text-left">Last Active</th>
+            <th className="px-4 py-2 text-left">Image</th>
+            <th className="px-4 py-2 text-left">Status</th>
             <th className="px-4 py-2 text-left">Actions</th>
           </tr>
         </thead>
-        <tbody>
+        
+       <tbody>
           {users.map((u, i) => (
-            <tr key={i} className="border-t hover:bg-gray-50">
-              <td className="px-4 py-2">{u.name}</td>
+            <tr
+              key={i}
+              className={`border-t ${
+                i % 2 === 0 ? "bg-[#F3F8FF]" : "bg-[#F9FAFB]"
+              } hover:bg-gray-200`}
+            >
+              <td className="px-4 py-2">{u.name.split(" ")[0]}</td>
+
+              <td className="px-4 py-2">{u.name.split(" ").slice(1).join(" ")}</td>
+
               <td className="px-4 py-2">{u.email}</td>
-              <td className="px-4 py-2">{u.username}</td>
+
+              <td className="px-4 py-2">-</td>
+
+              <td className="px-4 py-2">-</td>
+
+              <td className="px-4 py-2">{u.role}</td>
+
+              <td className="px-4 py-2">-</td>
+
               <td className="px-4 py-2">
                 <UserStatusBadge status={u.status} />
               </td>
-              <td className="px-4 py-2">{u.role}</td>
-              <td className="px-4 py-2">{u.joined}</td>
-              <td className="px-4 py-2">{u.lastActive}</td>
-              <td className="px-4 py-2 flex gap-2">
-                <button className="p-1 hover:bg-gray-100 rounded">
-                  <Edit size={16} />
-                </button>
-                <button className="p-1 hover:bg-gray-100 rounded text-red-500">
-                  <Trash2 size={16} />
-                </button>
+              <td className="px-4 py-2">
+                <div className="flex items-center gap-2">
+                  <button suppressHydrationWarning className="p-1 hover:bg-gray-300 rounded-md">
+                    <Edit size={16} />
+                  </button>
+                  <button suppressHydrationWarning className="p-1 hover:bg-gray-300 rounded-md text-red-500">
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

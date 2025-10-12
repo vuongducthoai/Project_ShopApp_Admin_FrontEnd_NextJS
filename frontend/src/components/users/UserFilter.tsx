@@ -26,6 +26,26 @@ export default function UserFilter({filters, onFilterChange, onAddUserClick} : U
     onFilterChange(name, value);
   };
 
+  const handleExport = () => {
+    //Build query string base on filter current
+    const params = new URLSearchParams();
+    if(filters.search) params.append('search', filters.search);
+    if(filters.role) params.append('role', filters.role);
+    if(filters.status) params.append('status', String(filters.status));
+
+    const queryString = params.toString();
+    const exportUrl = `${process.env.NEXT_PUBLIC_API_URL}/users/export?${queryString}`;
+
+    //Create element <a> hidden to active download
+    const link = document.createElement('a');
+    link.href = exportUrl;
+    link.setAttribute('download', 'users.csv');
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+  }
+
   return (
     <div className="flex flex-wrap justify-between items-center gap-4 bg-[#F9FAFB] p-4 rounded-lg">
       <div className="flex gap-2 flex-wrap items-center">
@@ -60,7 +80,11 @@ export default function UserFilter({filters, onFilterChange, onAddUserClick} : U
       </div>
 
       <div className="flex gap-2">
-        <button suppressHydrationWarning className="flex items-center gap-1 border rounded-[20px] px-3 py-1 hover:bg-gray-50 cursor-pointer">
+        <button 
+            suppressHydrationWarning 
+            className="flex items-center gap-1 border rounded-[20px] px-3 py-1 hover:bg-gray-50 cursor-pointer"
+            onClick={handleExport}
+            >
           <Download size={16} /> Export
         </button>
         <button suppressHydrationWarning 

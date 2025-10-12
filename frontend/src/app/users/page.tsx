@@ -3,10 +3,10 @@
 "use client";
 import { useState } from "react";
 import useSWR from "swr"; // Import SWR
-
+import type { User } from "@/types/user"
 import UserTable from "@/components/users/UserTable";
 import UserFilter from "@/components/users/UserFilter";
-import AddUserModal from "@/components/users/AddUserModal";
+import UserFormModal from "@/components/users/UserFormModal";
 import PaginationFooter from "@/components/users/PaginationFooter";
 
 // Định nghĩa hàm fetcher cho SWR
@@ -14,7 +14,8 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function UsersPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+
   // State quản lý phân trang
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -46,7 +47,8 @@ export default function UsersPage() {
   const apiKey = `${process.env.NEXT_PUBLIC_API_URL}/users?${params.toString()}`;
 
   // Dùng SWR để fetch dữ liệu
-  const { data, error, isLoading } = useSWR(apiKey, fetcher);
+  //use function mutate of SWR to automate refresh list data user after delete user successfully
+  const { data, error, isLoading, mutate } = useSWR(apiKey, fetcher);
 
  
   
@@ -57,6 +59,24 @@ export default function UsersPage() {
   const users = data?.data || [];
   const totalRows = data?.total || 0;
   const totalPages = data?.totalPages || 0;
+
+   const handleAddClick = () => {
+    setEditingUser(null);
+    setIsModalOpen(true);
+  };
+  
+
+
+  const handleEditClick = (user: User) => {
+    setEditingUser(user);
+    setIsModalOpen(true);
+  };
+
+
+ const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingUser(null); 
+  };
 
   return (
     <main className="space-y-6">
@@ -70,15 +90,17 @@ export default function UsersPage() {
       <UserFilter 
         filters={filters}
         onFilterChange={handleFilterChange}
-        onAddUserClick={() => setIsModalOpen(true)} />
+        onAddUserClick={handleAddClick} />
       
-      <AddUserModal
+      <UserFormModal 
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleCloseModal}
+        initialData={editingUser} 
+        mutate={mutate}
       />
       
       <div className="border rounded-lg overflow-hidden">
-        <UserTable users={users} isLoading={isLoading}/>
+        <UserTable users={users} isLoading={isLoading} mutate={mutate} onEdit={handleEditClick} />
       </div>
 
       <PaginationFooter

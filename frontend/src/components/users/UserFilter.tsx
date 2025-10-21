@@ -8,6 +8,7 @@ export default function UserFilter() {
         <div className="flex items-center border rounded-[20px] px-2">
           <Search size={18} className="text-gray-500" />
           <input
+            suppressHydrationWarning
             type="text"
             placeholder="Search"
             className="ml-2 outline-none border-none"

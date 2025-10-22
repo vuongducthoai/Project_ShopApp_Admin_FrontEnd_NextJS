@@ -11,30 +11,21 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-// const data = [
-//   { name: "Jan", sales: 4000 },
-//   { name: "Feb", sales: 3000 },
-//   { name: "Mar", sales: 5000 },
-//   { name: "Apr", sales: 4780 },
-//   { name: "May", sales: 5890 },
-//   { name: "Jun", sales: 4390 },
-//   { name: "Jul", sales: 4490 },
-//   { name: "Aug", sales: 4700 },
-//   { name: "Sep", sales: 5200 },
-//   { name: "Oct", sales: 6300 },
-//   { name: "Nov", sales: 5800 },
-//   { name: "Dec", sales: 6900 },
-// ];
+
 interface SaleStatistics{
   month: number;
   total: number;
 }
 
-export default function SalesChart() {
-  const [selectedYear, setSelectedYear] = useState(2025);
+interface SalesChartProps {
+  selectedYear: number;
+  setSelectedYear: (year: number) => void;
+}
+
+export default function SalesChart({ selectedYear, setSelectedYear }: SalesChartProps) {
   const [saleStatistics, setSaleStatistics] = useState<SaleStatistics[]>([]);
   const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+  const [error, setError] = useState("");
   
     useEffect(() => {
       const fetchSaleStatistics = async () => {

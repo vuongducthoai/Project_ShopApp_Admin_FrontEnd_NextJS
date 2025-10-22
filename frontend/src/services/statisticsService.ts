@@ -24,3 +24,37 @@ export async function getStatisticsSale(year: number) {
 
     return res.json()
 }
+
+
+export async function getOrders(month: string, year: string) {
+  const res = await fetch(`${BASE_URL}/orders?month=${month}&year=${year}`, {
+    cache: "no-store"
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || "Failed to fetch orders");
+  }
+
+  return res.json();
+}
+
+export async function exportOrderToPDF(id: string) {
+  const res = await fetch(`${BASE_URL}/export-pdf/${id}`, {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || "Failed to export PDF");
+  }
+
+  const blob = await res.blob();
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `order_${id}.pdf`;
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
+

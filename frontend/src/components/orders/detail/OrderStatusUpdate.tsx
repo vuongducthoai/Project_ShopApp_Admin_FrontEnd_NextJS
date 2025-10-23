@@ -2,56 +2,78 @@
 
 import { useState } from 'react';
 import { KeyedMutator } from 'swr';
+// Sửa lại đường dẫn import nếu cần
 import { updateOrderStatus } from '@/services/order.service';
-import type { OrderStatus } from '@/types/order';
+import { OrderStatus } from '@/types/order';
 import OrderStatusBadge from '@/components/orders/OrderStatusBadge';
 
 type OrderStatusUpdaterProps = {
   orderId: string;
   currentStatus: OrderStatus;
-  nextStatuses: OrderStatus[]; // <-- Nhận trực tiếp qua props
-  mainMutate: KeyedMutator<any>; 
-  detailMutate: KeyedMutator<any>; 
+  nextStatuses: OrderStatus[];
+  mainMutate: KeyedMutator<any>;
+  detailMutate: KeyedMutator<any>;
 };
 
-export default function OrderStatusUpdater({ 
-  orderId, 
-  currentStatus, 
-  nextStatuses, // <-- Sử dụng prop này
-  mainMutate, 
-  detailMutate 
+export default function OrderStatusUpdater({
+  orderId,
+  currentStatus,
+  nextStatuses,
+  mainMutate,
+  detailMutate
 }: OrderStatusUpdaterProps) {
-  
+
   const [selectedStatus, setSelectedStatus] = useState<OrderStatus | ''>('');
+  const [cancellationReason, setCancellationReason] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleUpdate = async () => {
+    // --- SỬA LỖI 1: KIỂM TRA LÝ DO HỦY ---
     if (!selectedStatus) {
       setError('Please select a new status.');
       return;
     }
+    // Chỉ kiểm tra lý do khi trạng thái là CANCELLED
+    if (selectedStatus === OrderStatus.CANCELLED && !cancellationReason.trim()) {
+      setError('Please enter a reason for cancellation.');
+      return;
+    }
+    // --- KẾT THÚC SỬA LỖI 1 ---
+
     setError(null);
     setIsSubmitting(true);
 
     try {
-      await updateOrderStatus(orderId, selectedStatus);
+      // --- SỬA LỖI 2: CHUẨN BỊ PAYLOAD ĐÚNG ---
+      const payload: { status: OrderStatus; cancellationReason?: string } = { status: selectedStatus };
+      if (selectedStatus === OrderStatus.CANCELLED) {
+        payload.cancellationReason = cancellationReason.trim();
+      }
+      
+      // Gọi API với payload
+      await updateOrderStatus(orderId, payload); 
+      // --- KẾT THÚC SỬA LỖI 2 ---
+
       alert('Order status updated successfully!');
       
-      await detailMutate(); 
+      await detailMutate();
       await mainMutate();
 
       setSelectedStatus('');
+      setCancellationReason(''); // Reset cả lý do hủy
+
     } catch (err) {
       setError((err as Error).message);
     } finally {
       setIsSubmitting(false);
     }
   };
-  
-  // Logic kiểm tra đơn giản hơn dựa trên prop
-  if (!nextStatuses || nextStatuses.length === 0) {
-    return (
+
+  // Logic hiển thị khi ở trạng thái cuối cùng (giữ nguyên)
+  if (!Array.isArray(nextStatuses) || nextStatuses.length === 0) {
+    // ... JSX hiển thị trạng thái cuối cùng ...
+     return (
         <div className="bg-white p-6 rounded-lg shadow-sm border space-y-3">
             <h2 className="text-lg font-semibold">Current Status</h2>
             <div className='flex justify-center'>
@@ -62,17 +84,23 @@ export default function OrderStatusUpdater({
     );
   }
 
+  // JSX hiển thị dropdown và nút (giữ nguyên)
   return (
     <div className="bg-white p-6 rounded-lg shadow-sm border space-y-4">
       <h2 className="text-lg font-semibold">Update Status</h2>
-      <div className="flex flex-col sm:flex-row items-center gap-4">
+      <div className="flex flex-col sm:flex-row items-start gap-4"> {/* Căn chỉnh items-start */}
         <select
           value={selectedStatus}
-          onChange={(e) => setSelectedStatus(e.target.value as OrderStatus)}
+          onChange={(e) => {
+            const newStatus = e.target.value as OrderStatus;
+            setSelectedStatus(newStatus);
+            if (newStatus !== OrderStatus.CANCELLED) {
+              setCancellationReason(''); // Reset lý do khi chọn trạng thái khác
+            }
+          }}
           className="flex-grow w-full p-2 border rounded-lg text-sm bg-gray-50"
         >
           <option value="" disabled>Select next status...</option>
-          {/* Render trực tiếp từ props */}
           {nextStatuses.map(status => (
             <option key={status} value={status}>{status}</option>
           ))}
@@ -85,7 +113,26 @@ export default function OrderStatusUpdater({
           {isSubmitting ? 'Updating...' : 'Update'}
         </button>
       </div>
-       {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+
+      {selectedStatus === OrderStatus.CANCELLED && (
+        <div className="mt-4">
+          <label htmlFor="cancellationReason" className="block text-sm font-medium text-gray-700 mb-1">
+            Reason for Cancellation (Required)
+          </label>
+          <textarea
+            id="cancellationReason"
+            name="cancellationReason"
+            rows={3}
+            value={cancellationReason}
+            onChange={(e) => setCancellationReason(e.target.value)}
+            className="w-full p-2 border rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter the reason why this order is being cancelled..."
+            required
+          />
+        </div>
+      )}
+
+      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
     </div>
   );
 }

@@ -9,7 +9,7 @@ type ItemsTableProps = {
 const ItemsTable = ({ items }: ItemsTableProps) => (
   <div className="bg-white p-6 rounded-lg shadow-md border-gray-100">
     {/* 1. Bọc bảng trong một div có thể cuộn */}
-    <div className="max-h-[300px] overflow-y-auto relative border rounded-lg">
+    <div className="max-h-[500px] overflow-y-auto relative border rounded-lg">
       {/* 2. Dùng một thẻ <table> duy nhất */}
       <table className="w-full text-sm">
         {/* 3. Dùng "sticky" để cố định thead */}

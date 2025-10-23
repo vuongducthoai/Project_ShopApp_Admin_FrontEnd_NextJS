@@ -12,11 +12,12 @@ export async function getOrderById(id: string): Promise<OrderDetail | null> {
   }
 }
 
-export async function updateOrderStatus(id: string, status: OrderStatus): Promise<any> {
+export async function updateOrderStatus(id: string, payload: { status: OrderStatus; cancellationReason?: string }): Promise<any> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/${id}/status`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ status }),
+    // Gửi toàn bộ payload lên API
+    body: JSON.stringify(payload), 
   });
 
   if (!res.ok) {

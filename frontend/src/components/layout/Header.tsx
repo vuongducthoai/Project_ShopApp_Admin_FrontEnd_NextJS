@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="h-12 bg-red border-b flex items-center justify-between px-4 shadow-sm">
+    <header className="h-12 bg-red flex items-center justify-between px-4 shadow-sm">
       {/* Left section: Menu + Search */}
       <div className="flex items-center">
         <Menu size={24} className="mr-2 text-gray-600 cursor-pointer" />
@@ -13,7 +13,7 @@ export default function Header() {
           <input
             suppressHydrationWarning
             type="text"
-            placeholder="Search"
+            placeholder="Search"  
             className="w-full bg-transparent outline-none text-sm text-gray-700"
           />
         </div>

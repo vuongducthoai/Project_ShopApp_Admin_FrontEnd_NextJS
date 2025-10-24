@@ -80,7 +80,7 @@ const ProductList: React.FC = () => {
   // Fetch dữ liệu từ backend
 const fetchProducts = async () => {
   try {
-    const response = await axios.get("http://localhost:9090/api/products", {
+    const response = await axios.get("http://localhost:9090/api/products/all", {
       params: {
         page: currentPage,
         limit: 6,

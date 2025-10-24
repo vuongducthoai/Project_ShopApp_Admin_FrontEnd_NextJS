@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { 
   Home, Box, ShoppingCart, User, 
   MessageSquare, Ticket, Bell, 
@@ -7,40 +8,46 @@ import {
 } from "lucide-react";
 
 export default function Sidebar() {
+  const pathname = usePathname();
+
+  const navLinks = [
+     { href: "/", label: "Dashboard", icon: Home },
+    { href: "/users", label: "User", icon: User },
+    { href: "/orders", label: "Order Lists", icon: ShoppingCart },
+    { href: "/categories", label: "Category", icon: Grid },
+    { href: "/products", label: "Products", icon: Box },
+    { href: "/comments", label: "Comment", icon: MessageSquare },
+    { href: "/coupons", label: "Coupon", icon: Ticket },
+    { href: "/notifications", label: "Notify", icon: Bell },
+  ]
+  
   return (
-    <aside className="w-50 h-screen bg-white border-r p-4 flex flex-col">
+    <aside className="w-50 h-screen bg-white p-4 flex flex-col">
       <h1 className="text-xl text-center font-bold text-blue-600 mb-6">Dash<span className="text-gray-800">Stack</span></h1>
       <nav className="flex-1 space-y-2">
-    <Link
-          href="/"
-          className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded 
-                    font-nunito font-semibold text-[14px] leading-[100%] tracking-[0.3px] mb-[1px]"
-        >
-          <Home size={18}/> Dashboard
-    </Link>
+        {navLinks.map((link) => {
+          const isActive = pathname === link.href;
+          const Icon = link.icon;
 
-
-         <Link href="/users" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">
-          <User size={18}/> User
-        </Link>
-        <Link href="/orders" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">
-           <ShoppingCart size={18}/> Order Lists
-        </Link>
-        <Link href="/categories" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">
-           <Grid size={18}/> Category
-        </Link>
-        <Link href="/products" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">
-          <Box size={18}/> Products
-        </Link>
-        <Link href="/comments" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">
-          <MessageSquare size={18}/> Comment
-        </Link>
-        <Link href="/coupons" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">
-          <Ticket size={18}/> Coupon
-        </Link>
-        <Link href="/notifications" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">
-          <Bell size={18}/> Notify
-        </Link>
+          return (
+            <Link
+              key={link.label}
+              href={link.href}
+              className={`
+                flex items-center gap-3 p-2 rounded-lg font-semibold text-sm
+                transition-colors duration-200
+                ${
+                  isActive
+                    ? "bg-[#4880FF] text-white" 
+                    : "text-gray-600 hover:bg-gray-100" 
+                }
+              `}
+            >
+              <Icon size={18} />
+              {link.label}
+            </Link>
+          );
+        })}
       </nav>
       <div className="border-t pt-2 space-y-2">
         <Link href="/settings" className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">

@@ -26,7 +26,7 @@ export default function RootLayout({
         {/* Main Content */}
         <div className="flex flex-col flex-1">
           <Header />
-          <main className="flex-1 p-4 overflow-y-auto">{children}</main>
+          <main className="flex-1 p-4 overflow-y-auto bg-[#F5F6FA]">{children}</main>
           <Footer />
         </div>
       </body>

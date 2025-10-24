@@ -1,7 +1,7 @@
-export default function UserStatusBadge({ status }: { status: string }) {
+export default function CouponStatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
-    Active: "bg-[#28A745] text-[#FFFFFF]",
-    Banned: "bg-[#DC3545] text-[#FFFFFF]",
+    Active: "bg-green-100 text-green-700",
+    Inactive: "bg-gray-100 text-gray-700",
   };
 
   return (

@@ -4,6 +4,7 @@ import AddCouponForm from "@/components/coupons/AddCouponForm";
 import UpdateCouponForm from "@/components/coupons/UpdateCouponForm";
 import CouponFilter from "@/components/coupons/CouponFilter";
 import CouponTable from "@/components/coupons/CouponTable";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export interface Coupon {
   id?: string;
@@ -66,15 +67,17 @@ export default function CouponsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-800">Coupon Management</h1>
-        <p className="text-gray-500">
-          Manage all coupons in one place. Control access, assign roles, and monitor activity across your platform.
-        </p>
-      </div>
+    <ProtectedRoute>
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">Coupon Management</h1>
+          <p className="text-gray-500">
+            Manage all coupons in one place. Control access, assign roles, and monitor activity across your platform.
+          </p>
+        </div>
 
-      {content}
-    </div>
+        {content}
+      </div>
+    </ProtectedRoute>
   );
 }

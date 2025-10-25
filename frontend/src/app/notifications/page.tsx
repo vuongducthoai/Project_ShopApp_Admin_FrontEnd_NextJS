@@ -9,6 +9,7 @@ import AddNotificationForm from "@/components/notification/AddNotificationForm"
 import NotificationTable from "@/components/notification/NotificationTable"
 import NotificationFilter from "@/components/notification/NotificationFilter"
 import { useState } from "react"
+import ProtectedRoute from "@/components/ProtectedRoute"
 
 export default function NotificationPage() {
     const [showAddForm, setShowAddForm] = useState(false)
@@ -16,6 +17,7 @@ export default function NotificationPage() {
 
 
     return (
+        <ProtectedRoute>
         <div className="p-4">
             <button
                 onClick={() => setShowAddForm(true)}
@@ -67,5 +69,6 @@ export default function NotificationPage() {
             )}
         <NotificationTable filters={filter}/>
         </div>
+        </ProtectedRoute>
     )
 }

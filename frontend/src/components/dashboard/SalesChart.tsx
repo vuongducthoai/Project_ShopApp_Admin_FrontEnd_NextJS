@@ -80,10 +80,10 @@ export default function SalesChart({ selectedYear, setSelectedYear }: SalesChart
         </div>
       </div>
       <div className="h-80">
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="95%" height={300}>
           <LineChart 
             data={saleStatistics} 
-            margin={{ top: 10, right: 30, left: 40, bottom: 0 }} 
+            margin={{ top: 10, right: 30, left: 50, bottom: 0 }} 
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis dataKey="month" stroke="#9ca3af" />

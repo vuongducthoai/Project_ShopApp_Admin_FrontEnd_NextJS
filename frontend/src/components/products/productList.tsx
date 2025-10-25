@@ -324,7 +324,7 @@ useEffect(() => {
       disabled={currentPage === 1}
       onClick={() => handlePageChange(currentPage - 1)}
     >
-      ◀ Prev
+      Prev
     </button>
 
     {[...Array(totalPages)].map((_, i) => (
@@ -347,7 +347,7 @@ useEffect(() => {
       disabled={currentPage === totalPages}
       onClick={() => handlePageChange(currentPage + 1)}
     >
-      Next ▶
+      Next
     </button>
   </div>
    {/* Confirmation Modal */}

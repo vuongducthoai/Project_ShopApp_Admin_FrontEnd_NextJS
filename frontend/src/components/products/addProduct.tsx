@@ -39,7 +39,7 @@ export default function AddProductPage() {
     (async () => {
       setLoadingCats(true);
       try {
-        const res = await fetch("http://localhost:9090/api/categories");
+        const res = await fetch("http://localhost:9090/api/categories/all");
         const data = await res.json();
         setCategories(data?.categories || []);
       } catch (e) {

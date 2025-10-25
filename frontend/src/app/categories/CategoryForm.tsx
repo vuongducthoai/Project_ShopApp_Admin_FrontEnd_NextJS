@@ -10,7 +10,7 @@ interface CategoryFormProps {
 
 const CategoryForm: React.FC<CategoryFormProps> = ({ onSuccess, editingCategory, onCancel }) => {
     const [categoryName, setCategoryName] = useState("");
-    
+
     useEffect(() => {
         if (editingCategory) setCategoryName(editingCategory.categoryName)
         else setCategoryName("")
@@ -31,10 +31,10 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onSuccess, editingCategory,
             alert("Lỗi khi lưu category!");
         }
     }
-    
+
     return (
-        <form 
-            onSubmit={handleSubmit} 
+        <form
+            onSubmit={handleSubmit}
             style={{
                 backgroundColor: "white",
                 padding: "2rem",
@@ -45,9 +45,9 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onSuccess, editingCategory,
                 border: "1px solid #e5e7eb"
             }}
         >
-            <h2 style={{ 
-                fontSize: "1.5rem", 
-                fontWeight: "700", 
+            <h2 style={{
+                fontSize: "1.5rem",
+                fontWeight: "700",
                 marginBottom: "1.5rem",
                 color: "#1f2937",
                 borderBottom: "3px solid #3b82f6",
@@ -55,7 +55,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onSuccess, editingCategory,
             }}>
                 {editingCategory ? "✏️ Sửa Category" : "➕ Thêm Category"}
             </h2>
-            
+
             <div style={{ marginBottom: "1.5rem" }}>
                 <label style={{
                     display: "block",
@@ -66,16 +66,21 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onSuccess, editingCategory,
                 }}>
                     Tên Category
                 </label>
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     placeholder="Nhập tên category..."
                     value={categoryName}
-                    onChange={(e) => setCategoryName(e.target.value)}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (/^[A-Za-zÀ-ỹ\s]*$/.test(value)) {
+                            setCategoryName(e.target.value);
+                        }
+                    }}
                     required
                     style={{
                         border: "2px solid #e5e7eb",
                         padding: "0.75rem",
-                        maxWidth:"94%",
+                        maxWidth: "94%",
                         width: "100%",
                         borderRadius: "0.5rem",
                         outline: "none",
@@ -92,7 +97,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onSuccess, editingCategory,
                     }}
                 />
             </div>
-            
+
             <div style={{ display: "flex", gap: "0.75rem" }}>
                 <button
                     type="submit"
@@ -122,7 +127,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ onSuccess, editingCategory,
                 >
                     {editingCategory ? "💾 Cập nhật" : "✨ Thêm mới"}
                 </button>
-                
+
                 {editingCategory && onCancel && (
                     <button
                         type="button"

@@ -5,6 +5,7 @@ import api from "@/lib/api";
 import CategoryForm from "./CategoryForm";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
+import ProtectedRoute from "@/components/ProtectedRoute";
 interface Category {
   id: string;
   categoryName: string;
@@ -45,6 +46,7 @@ export default function CategoryPage() {
 
 
   return (
+    <ProtectedRoute>
     <div style={{
       padding: "2rem",
       backgroundColor: "#f9fafb",
@@ -244,5 +246,6 @@ export default function CategoryPage() {
         </div>
       </div>
     </div >
+    </ProtectedRoute>
   );
 }

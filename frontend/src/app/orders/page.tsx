@@ -8,6 +8,7 @@ import OrderTable from '@/components/orders/OrderTable';
 import PaginationFooter from '@/components/users/PaginationFooter'; 
 import { useDebounce } from '@/hooks/useDebounce'; 
 import OrderDetailModal from '@/components/orders/OrderDetailModal';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -51,6 +52,7 @@ export default function OrdersPage() {
   const totalPages = data?.totalPages || 0;
 
   return (
+    <ProtectedRoute>
     <main className="p-6 space-y-6 bg-gray-50 min-h-screen">
       <h1 className="text-3xl font-bold text-gray-800">Order Management</h1>
       
@@ -80,5 +82,6 @@ export default function OrdersPage() {
         mainMutate={mutate}
       />
     </main>
+    </ProtectedRoute>
   );
 }

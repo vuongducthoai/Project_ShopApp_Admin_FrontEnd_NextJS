@@ -21,7 +21,7 @@ type FormDataState = {
   phoneNumber: string;
   gender: string;
   role: string;
-  status: string;
+  status: Boolean;
 };
 
 const initialState: FormDataState = {
@@ -32,7 +32,7 @@ const initialState: FormDataState = {
   phoneNumber: "",
   gender: "Male",
   role: "Customer",
-  status: "Active"
+  status: true,
 };
 
 
@@ -58,7 +58,7 @@ export default function UserFormModal({ isOpen, onClose, initialData, mutate }: 
           phoneNumber: initialData.phoneNumber || '',
           gender: initialData.gender ? 'Male' : 'Female',
           role: initialData.role || 'Customer',
-          status: initialData.status ? 'Active' : 'Banned'
+          status: !!initialData.status 
         });
       } else {
         setFormData(initialState); // Reset form khi ở chế độ Add
@@ -88,7 +88,7 @@ export default function UserFormModal({ isOpen, onClose, initialData, mutate }: 
         await updateUser(initialData.id, {
           ...updateData,
           gender: formData.gender === 'Male',
-          status: formData.status === 'Active'
+          status: initialData.status ? true : false
         });
         alert("User updated successfully!");
       } else {
@@ -183,13 +183,14 @@ export default function UserFormModal({ isOpen, onClose, initialData, mutate }: 
               </select>
             </div>
 
-            {
-              isEditMode && (
-                <div>
-                  <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
-                  <select id="status" name="status" value={formData.status} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                    <option>Active</option>
-                    <option>Banned</option>
+             {
+              isEditMode  && (
+                 <div>
+                    <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
+                    <select id="status" name="status" value={formData.status ? "Active" : "Banned"} onChange={handleChange} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                      <option>Active</option>
+                      <option>Banned</option>
+
                   </select>
                 </div>
               )

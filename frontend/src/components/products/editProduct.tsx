@@ -79,7 +79,7 @@ export default function EditProductPage() {
 
         // Lấy categories
         setLoadingCats(true);
-        const categoryRes = await fetch("http://localhost:9090/api/categories");
+        const categoryRes = await fetch("http://localhost:9090/api/categories/all");
         const categoryData = await categoryRes.json();
         setCategories(categoryData?.categories || []);
       } catch (err) {
@@ -209,6 +209,7 @@ export default function EditProductPage() {
               <label className="flex flex-col gap-1">
                 <span className="text-sm font-medium text-gray-700">Price (VND)</span>
                 <input
+                suppressHydrationWarning={true}
                   type="number"
                   min={0}
                   value={price}
@@ -221,6 +222,7 @@ export default function EditProductPage() {
               <label className="flex flex-col gap-1">
                 <span className="text-sm font-medium text-gray-700">Category</span>
                 <select
+                suppressHydrationWarning={true}
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
                   className="border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500"

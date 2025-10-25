@@ -21,7 +21,6 @@ export default function Sidebar() {
     { href: "/orders", label: "Order Lists", icon: ShoppingCart },
     { href: "/categories", label: "Category", icon: Grid },
     { href: "/products", label: "Products", icon: Box },
-    { href: "/comments", label: "Comment", icon: MessageSquare },
     { href: "/coupons", label: "Coupon", icon: Ticket },
     { href: "/notifications", label: "Notify", icon: Bell },
   ];

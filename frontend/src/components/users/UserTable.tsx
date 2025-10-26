@@ -63,7 +63,6 @@ export default function UserTable({users, isLoading, mutate, onEdit}: UserTableP
             <th className="px-4 py-2 text-left">Phone Number</th>
             <th className="px-4 py-2 text-left">Gender</th>
             <th className="px-4 py-2 text-left">Role</th>
-            <th className="px-4 py-2 text-left">Image</th>
             <th className="px-4 py-2 text-left">Status</th>
             <th className="px-4 py-2 text-left">Actions</th>
           </tr>
@@ -91,7 +90,6 @@ export default function UserTable({users, isLoading, mutate, onEdit}: UserTableP
 
               <td className="px-4 py-2">{u.role}</td>
 
-              <td className="px-4 py-2">{u.Image}</td>
 
               <td className="px-4 py-2">
                 <UserStatusBadge status={u.status ? 'Active' : 'Banned'} />

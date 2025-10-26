@@ -46,6 +46,8 @@ export type OrderItemDetail = {
   itemTotal: number;
 };
 
+
+
 export type OrderDetail = {
   id: string;
   orderDate: string;
@@ -62,17 +64,19 @@ export type OrderDetail = {
   items: OrderItemDetail[];
   pricing: {
     subTotal: number;
-    discountPercentage: number;
-    discountAmount: number;
+    discountValue: number;
     couponCode: string;
-    coinsUsed: number;
-    coinsUsedValue: number;
-    finalTotal: number;
-    paymentAmount: number;
+    coinsApplied: number;
+    coinValue: number;
+    totalPrice: number;
   };
   paymentInfo: {
+    isPaid: boolean; 
+    amount: number;
     method: string;
-    date: string;
+    paidAt: string | null; 
+    vnpTransactionNo?: string;
   };
+  cancellationReason?: string;
   nextStatuses: OrderStatus[];
 };

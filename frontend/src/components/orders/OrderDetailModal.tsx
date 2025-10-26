@@ -65,7 +65,10 @@ export default function OrderDetailModal({ orderId, onClose, mainMutate }: Order
                 <ItemsTable items={order.items} />
               </div>
               <div className="space-y-6">
-                <PricingCard pricing={order.pricing} payment={order.paymentInfo} />
+                  <PricingCard 
+                  pricing={order.pricing} 
+                  paymentInfo={order.paymentInfo} 
+                />
                 <OrderStatusUpdater 
                   orderId={orderId} 
                   currentStatus={order.orderStatus}

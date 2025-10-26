@@ -42,6 +42,7 @@ export default function AddProductPage() {
         const res = await fetch("http://localhost:9090/api/categories/all");
         const data = await res.json();
         setCategories(data?.categories || []);
+        console.log(data)
       } catch (e) {
         console.error(e);
       } finally {
@@ -317,7 +318,7 @@ export default function AddProductPage() {
             <button
               type="button"
               suppressHydrationWarning={true}
-              //onClick={() => router.push("/products")}
+              onClick={() => router.push("/products")}
               className="px-5 py-2.5 border border-gray-300 rounded-xl hover:bg-gray-50 transition"
             >
               Cancel

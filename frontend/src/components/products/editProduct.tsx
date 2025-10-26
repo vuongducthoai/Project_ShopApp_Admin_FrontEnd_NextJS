@@ -368,7 +368,7 @@ export default function EditProductPage() {
             </button>
             <button
               type="button"
-              //onClick={() => router.push("/products")}
+              onClick={() => router.push("/products")}
               className="px-5 py-2.5 border border-gray-300 rounded-xl hover:bg-gray-50 transition"
             >
               Cancel

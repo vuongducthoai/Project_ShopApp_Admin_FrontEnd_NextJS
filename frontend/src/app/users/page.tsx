@@ -9,10 +9,7 @@ import UserFilter from "@/components/users/UserFilter";
 import UserFormModal from "@/components/users/UserFormModal";
 import PaginationFooter from "@/components/users/PaginationFooter";
 import ProtectedRoute from "@/components/ProtectedRoute";
-<<<<<<< HEAD
-=======
 
->>>>>>> d697e7dc809238b632f8679b8914b183f51679b3
 // Định nghĩa hàm fetcher cho SWR
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -83,11 +80,7 @@ export default function UsersPage() {
   };
 
   return (
-<<<<<<< HEAD
-    <ProtectedRoute >
-=======
     <ProtectedRoute>
->>>>>>> d697e7dc809238b632f8679b8914b183f51679b3
     <main className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">User Management</h1>
@@ -121,11 +114,7 @@ export default function UsersPage() {
         setCurrentPage={setCurrentPage}
       />
     </main>
-<<<<<<< HEAD
      </ProtectedRoute>
-=======
-    </ProtectedRoute>
->>>>>>> d697e7dc809238b632f8679b8914b183f51679b3
   );
  
 }

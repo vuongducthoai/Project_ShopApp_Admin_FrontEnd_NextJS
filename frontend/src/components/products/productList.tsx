@@ -318,7 +318,7 @@ useEffect(() => {
       {/* Pagination */}
     {/* Pagination */}
  {/* Pagination - Fixed at the bottom */}
-  <div className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-md flex justify-center items-center gap-2 mt-6 z-10">
+  <div className="fixed bottom-0 left-[200px] right-0 bg-white p-4 shadow-md flex justify-center items-center gap-2 mt-6 z-10">
     <button
       className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg disabled:opacity-50 transition"
       disabled={currentPage === 1}

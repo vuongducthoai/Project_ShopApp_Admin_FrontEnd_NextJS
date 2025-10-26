@@ -25,7 +25,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
       try {
         // Gọi API kiểm tra token
         const user = await getMyInfo(token);
-        if (user) {
+        if (user && user.status === true) {
           setAuthorized(true);
         } else {
           throw new Error("Token invalid");

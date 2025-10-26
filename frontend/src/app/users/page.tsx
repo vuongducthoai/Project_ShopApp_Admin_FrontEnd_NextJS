@@ -80,7 +80,8 @@ export default function UsersPage() {
   };
 
   return (
-    <ProtectedRoute>
+    <ProtectedRoute >
+
     <main className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">User Management</h1>
@@ -114,6 +115,8 @@ export default function UsersPage() {
         setCurrentPage={setCurrentPage}
       />
     </main>
-    </ProtectedRoute>
+     </ProtectedRoute>
+
   );
+ 
 }

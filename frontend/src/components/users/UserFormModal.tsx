@@ -88,7 +88,7 @@ export default function UserFormModal({ isOpen, onClose, initialData, mutate }: 
         await updateUser(initialData.id, {
           ...updateData,
           gender: formData.gender === 'Male',
-          status: initialData.status ? true : false
+          status: initialData.status ? false : true
         });
         alert("User updated successfully!");
       } else {
